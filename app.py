@@ -2,7 +2,6 @@ import streamlit as st
 import joblib
 import numpy as np
 
-# 1. Config & Style
 st.set_page_config(page_title="HeartGuard AI", page_icon="🫀", layout="wide")
 
 st.markdown("""
@@ -13,7 +12,6 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 2. Load Model
 @st.cache_resource
 def load_model():
     return joblib.load('model.pkl'), joblib.load('scaler.pkl')
@@ -24,19 +22,15 @@ except:
     st.error("Model not found. Run 'python train_model.py'")
     st.stop()
 
-# 3. UI Layout
 st.title("🫀 Heart Disease Risk AI")
 st.markdown("### *Comprehensive Analysis (94% Accuracy)*")
 st.markdown("---")
 
-# Sidebar
 with st.sidebar:
     st.header("Patient Data")
     age = st.slider("Age", 20, 100, 55)
     sex = st.radio("Sex", [1, 0], format_func=lambda x: "Male" if x==1 else "Female")
     st.caption("Developed by Kavyashree K")
-
-# Main Columns
 col1, col2 = st.columns(2)
 
 with col1:
@@ -55,11 +49,9 @@ with col2:
     slope = st.selectbox("ST Slope", [1, 2, 3], format_func=lambda x: {1:"Upsloping", 2:"Flat", 3:"Downsloping"}.get(x, x))
     restecg = st.selectbox("Resting ECG", [0, 1, 2], help="0: Normal, 1: ST-T Wave Abnormality, 2: LV Hypertrophy")
 
-# 4. Prediction
 st.markdown("---")
 if st.button("🚀 Analyze Risk"):
-    # Fix input mapping (Dataset 1-4 for CP, Model expects 1-4)
-    # Map inputs to array
+   
     input_data = np.array([[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope]])
     
     input_scaled = scaler.transform(input_data)
