@@ -1,0 +1,14 @@
+# Ignore Python temporary files
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environments
+venv/
+env/
+.env
+
+# Ignore VS Code settings
+.vscode/
+
+# Optional: Ignore the dataset if you want (keep it for now so your repo works out-of-the-box)
+# data/
